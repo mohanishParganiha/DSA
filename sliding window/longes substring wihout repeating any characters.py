@@ -1,28 +1,23 @@
-s = "qrsvbspk"
+s = ""
 
 
 
 def findMax(s):
-    left = right = 0
-    seen = dict()
-
-    max_len = 0
-
-    if len(s) == 1:
-        return 1
-    elif len(s) == 0:
+    seenHashSet = set()
+    max_len = float('-inf')
+    i = 0
+    j = 0
+    while j  < len(s) and i < len(s):
+        if s[j] in seenHashSet:
+            seenHashSet.clear()
+            i += 1
+            j = i
+            continue
+        seenHashSet.add(s[j])
+        max_len = max(max_len,len(seenHashSet))
+        j += 1
+    if max_len <= 0 :
         return 0
-
-    while left < len(s) and right < len(s):
-        if s[right] in seen:
-            max_len = max(max_len,right-left)
-            seen.pop(s[left])
-            left += 1
-        seen[s[right]] = right
-        right += 1
-
-
     return max_len
-
 
 print(findMax(s))

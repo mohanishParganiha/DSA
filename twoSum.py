@@ -1,21 +1,18 @@
+from collections import defaultdict
 nums = [2,7,11,15]
 target = 9
 
-class Solution:
-    def twoSum(self,nums,target):
 
-        hashset = dict()
+def twoSum(nums:list[int],target:int)-> list[int]:
+    seen_hashMap = defaultdict(int)
 
-        for i in range(len(nums)):
+    i = 0
+    while i < len(nums):
+        new_target = target - nums[i]
+        if new_target in seen_hashMap:
+            return [seen_hashMap[new_target],i]
+        seen_hashMap[nums[i]] = i       
 
-            new_target = target - nums[i]
+        i += 1
 
-            if new_target in hashset:
-                return [hashset[new_target],i]
-            
-            hashset[nums[i]] = i
-
-        return 0
-    
-sol = Solution()
-print(sol.twoSum(nums,target))
+print(twoSum(nums=nums,target=target))
