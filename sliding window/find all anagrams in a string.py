@@ -10,18 +10,25 @@ def isAnagram(s,p_count):
 
 s = "cbaebabacd"
 p = "abc"
+def findAllAnagramInString(s:str,p:str)->list[int]:
+    p_counter = Counter(p)
+    s_counter = Counter()
+    window_size = len(p)
+    ans_list = []
+    for i in range(len(s)):
 
-window_length = len(p)-1
-p_count = Counter(p)
-left = 0
-right = left + window_length
-ans = []
+        s_counter[s[i]] += 1
+        
+        if i >= window_size:
+            if s_counter[s[i-window_size]] == 1:
+                del s_counter[s[i-window_size]]
+            else:
+                s_counter[s[i-window_size]] -= 1
+        
+        if s_counter == p_counter:
+            ans_list.append(i-window_size+1)
 
-while right < len(s):
-    if right-left < len(p):
-        if  isAnagram(s[left:right+1],p_count):
-            ans.append(left)
-    left += 1
-    right = left + window_length
+    return ans_list
 
-print(ans)
+
+print(findAllAnagramInString(s,p))
