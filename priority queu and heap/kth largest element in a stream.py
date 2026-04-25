@@ -4,23 +4,20 @@ import heapq
 class KthLargest:
 
     def __init__(self, k: int, nums: list[int]):
-        self.k = k
-        self.min_heap = [float('-inf')]
+        self.k_th = k
+        # size of heap should be k
+        self.min_heap = nums
         heapq.heapify(self.min_heap)
-        for num in nums:
-            if len(self.min_heap) < self.k:
-                if num >= self.min_heap[0]:
-                    heapq.heappush(self.min_heap, num)
-            else:
-                if num >= self.min_heap[0]:
-                    heapq.heapreplace(self.min_heap, num)
+        while len(self.min_heap) > self.k_th:
+            heapq.heappop(self.min_heap)
 
     def add(self, val: int) -> int:
-        if val >= self.min_heap[0]:
-            heapq.heapreplace(self.min_heap, val)
-            return self.min_heap[0]
-
-        return self.min_heap[0]
+        heapq.heappush(self.min_heap, val)
+        while len(self.min_heap) > self.k_th:
+            heapq.heappop(self.min_heap)
+        item = heapq.heappop(self.min_heap)
+        heapq.heappush(self.min_heap, item)
+        return item
 
 
 min_heap1 = KthLargest(3, [4, 5, 8, 2])
